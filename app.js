@@ -98,10 +98,10 @@ app.route("/articles/:articleTitle")
      });
    })
    .put((req, res) => {
-     Article.update(
+     Article.findOneAndUpdate(
        {title: req.params.articleTitle},
        {title: req.body.title, content: req.body.content},
-       {overwrite: true},
+       {overwrite: true, useFindAndModify: false},
        err => {
          if (!err) {
            res.send("Successfully updated article.");
@@ -110,7 +110,7 @@ app.route("/articles/:articleTitle")
      );
    })
    .patch((req, res) => {
-     Article.update(
+     Article.updateOne(
        {title: req.params.articleTitle},
        {$set: req.body},
        err => {
